@@ -55,7 +55,7 @@ class Handler implements URLHandler {
                 }
                 Collections.sort(pathsFound);
                 temp = String.join("\n", pathsFound);
-                return String.format("There are %d files found\n%s", pathsFound.size(), temp); 
+                return String.format("There are %d files found:\n%s", pathsFound.size(), temp); 
                 
                
             }
