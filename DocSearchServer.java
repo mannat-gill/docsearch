@@ -34,20 +34,21 @@ class FileHelpers {
 
 class Handler implements URLHandler {
     List<File> files;
+
     Handler(String directory) throws IOException {
       this.files = FileHelpers.getFiles(Paths.get(directory));
     }
+
     public String handleRequest(URI url) throws IOException {
         List<File> paths = FileHelpers.getFiles(Paths.get("./technical"));
         if(url.getPath().equals("/")){
-            return String.format("There are %d total files to search", paths.size()); 
+            return String.format("There are %d files to search", paths.size()); 
         }
         else if(url.getPath().equals("/search")){
             String[] parameters = url.getQuery().split("=");
             if(parameters[0].equals("q")){
                 String temp = ""; 
                 ArrayList<String> pathsFound = new ArrayList<>(); 
-
                 for(File f: paths){
                     if(FileHelpers.readFile(f).contains(parameters[1])){
                         pathsFound.add(f.toString()); 
@@ -55,17 +56,14 @@ class Handler implements URLHandler {
                 }
                 Collections.sort(pathsFound);
                 temp = String.join("\n", pathsFound);
-                return String.format("There are %d files found:\n%s", pathsFound.size(), temp); 
-                
-               
+                return String.format("There were %d files found:\n%s", pathsFound.size(), temp); 
             }
             else{
-                return "Couldn't find query parameter q";
+                return "Couldn't find query 'q' ";
             }
-
         }
         else {
-            return "Don't know how to handle that path!";
+            return "Couldn't Find Path";
         }
     }
 }
